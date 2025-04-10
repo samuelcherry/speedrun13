@@ -10,6 +10,9 @@ const Login = () => {
     const email = data.get("email");
     const password = data.get("password");
 
+    console.log(email, password);
+    console.log("data", data);
+
     const res = await fetch("http://localhost:3001/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -17,11 +20,11 @@ const Login = () => {
     });
 
     const authData = await res.json();
-    console.log(authData);
+    console.log(authData.user.displayname);
 
     if (res.ok) {
-      const uuid = authData.uuid;
-      const display_name = authData.displayName;
+      const uuid = authData.user.id;
+      const display_name = authData.user.displayname;
       console.log(display_name);
       localStorage.setItem("display_name", display_name);
       localStorage.setItem("uuid", uuid);

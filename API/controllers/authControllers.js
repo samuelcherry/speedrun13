@@ -6,6 +6,7 @@ const SECRET = process.env.JWT_SECRET || "secret";
 
 export const Register = async (req, res) => {
   const { email, password, displayName } = req.body;
+  console.log(password);
 
   if (!email || !password || !displayName) {
     console.log("Missing field(s)");
@@ -31,11 +32,15 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
   const result = await pool.query("SELECT * FROM users WHERE email = $1", [
     email
   ]);
-  console.log(result);
-  const user = result;
+
+  const user = result.rows[0];
   if (!user) return res.status(401).json({ error: "Invalid Credentails" });
 
   const match = await bcrypt.compare(password, user.password_hash);
@@ -44,5 +49,7 @@ export const Login = async (req, res) => {
   const token = jwt.sign({ id: user.id, email: user.email }, SECRET, {
     expiresIn: "1d"
   });
+  console.log("Sending response:");
+  console.log({ token, user });
   res.json({ token, user });
 };

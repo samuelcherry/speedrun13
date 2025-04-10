@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-  const display_name = localStorage.getItem("displayName");
+  const display_name = localStorage.getItem("display_name");
 
   const handleLogOut = () => {
     localStorage.clear();
