@@ -6,7 +6,6 @@ const SECRET = process.env.JWT_SECRET || "secret";
 
 export const Register = async (req, res) => {
   const { email, password, displayName } = req.body;
-  console.log(password);
 
   if (!email || !password || !displayName) {
     console.log("Missing field(s)");
@@ -17,10 +16,11 @@ export const Register = async (req, res) => {
 
   try {
     const result = await pool.query(
-      "INSERT INTO users (email, password_hash, displayName) VALUES ($1, $2, $3) RETURNING id, email, displayName",
+      `INSERT INTO users (email, password_hash, displayName)
+      VALUES ($1, $2, $3)
+      RETURNING id, email, displayName`,
       [email, hash, displayName]
     );
-    console.log("User created: ", result.rows[0]);
     res.json(result.rows[0]);
   } catch (error) {
     console.error("Registration error:", error);

@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <div className="header">
       <div>Welcome, {display_name}</div>
-      <button className="styleButton" onClick={handleLogOut}>
+      <button type="button" className="styleButton" onClick={handleLogOut}>
         Log Out
       </button>
     </div>

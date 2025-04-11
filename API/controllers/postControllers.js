@@ -41,8 +41,6 @@ export const deletePost = async (req, res) => {
         message: "Post deleted successfully",
         post: result.rows[0]
       });
-    } else {
-      return res.status(404).json({ error: "Post not found" });
     }
   } catch (error) {
     console.error("Error deleting posts:", error);
