@@ -61,6 +61,28 @@ const MainContent = () => {
     }
   };
 
+  const handleDelete = async (postId) => {
+    console.log(postId);
+    try {
+      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Post deleted:", data.message);
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+      } else {
+        console.error("Error:", data.error);
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -73,7 +95,7 @@ const MainContent = () => {
       <div>
         {posts.map((post) => (
           <div key={post.id}>
-            <Posts post={post} />
+            <Posts post={post} onDelete={handleDelete} />
           </div>
         ))}
       </div>
