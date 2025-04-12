@@ -5,22 +5,23 @@ import Posts from "./Posts";
 const MainContent = () => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    const getPost = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/posts");
-        const data = await response.json();
-        if (response.ok) {
-          setPosts(data);
-        } else {
-          console.error("Failed to fetch posts:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
+  const getPost = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3001/posts");
+      const data = await response.json();
+      if (response.ok) {
+        setPosts(data);
+      } else {
+        console.error("Failed to fetch posts:", data.error);
       }
-    };
-    getPost();
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
   }, []);
+
+  useEffect(() => {
+    getPost();
+  }, [getPost]);
 
   const handlePost = async (e) => {
     e.preventDefault();

@@ -1,13 +1,17 @@
 import { FaTrash } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
-const Posts = ({ post, onDelete }) => {
+const Posts = ({ post, onDelete, onEdit }) => {
   return (
     <div className="postContainer">
       <div className="postUser">{post.displayname}</div>
       <div className="postContent">
         {post.content}
         <div className="icons">
-          <FaTrash onClick={() => onDelete(post.id)} />
+          <FaTrash
+            style={{ paddingRight: "5px" }}
+            onClick={() => onDelete(post.id)}
+          />
         </div>
       </div>
     </div>

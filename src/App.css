@@ -86,11 +86,15 @@
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 30px);
+  padding: 5px;
+}
+
+.postButtons {
+  padding: 5px;
 }
 
 .icons {
   display: flex;
   justify-content: flex-end;
-  padding: 5px;
-  font-size: 18px;
+  font-size: 20px;
 }

@@ -36,9 +36,14 @@ export const Login = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
-  const result = await pool.query("SELECT * FROM users WHERE email = $1", [
-    email
-  ]);
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM users
+    WHERE email = $1
+    `,
+    [email]
+  );
 
   const user = result.rows[0];
   if (!user) return res.status(401).json({ error: "Invalid Credentails" });
